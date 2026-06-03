@@ -11,8 +11,8 @@ from src.engine.state import shared_state
 from src.engine.kernel import kernel_process
 
 def run_dashboard():
-    st.set_page_config(page_title="Enjambre Polímata v4.0", layout="wide")
-    st.title("🛡️ Centro de Control: Enjambre Polímata")
+    st.set_page_config(page_title="ASI Hive: Universal Superintelligence", layout="wide")
+    st.title("🌌 ASI Hive: Superinteligencia Universal")
 
     # Sidebar Info
     st.sidebar.header("Estado del Sistema")
@@ -39,6 +39,13 @@ def run_dashboard():
                 rl1.metric("RL Action Selection", data.get('rl_action', 0))
                 rl2.metric("Learning Rate (Epsilon)", data.get('rl_epsilon', 1.0))
                 rl3.metric("Cognitive Load", data.get('cognitive_load', 0))
+
+                # ASI Layer Row
+                st.subheader("🚀 Nivel de Superinteligencia (ASI)")
+                asi1, asi2, asi3 = st.columns(3)
+                asi1.metric("The Forge (Self-Improvement)", f"Cycle {data.get('forge_status', '0').split()[-1] if 'Cycle' in data.get('forge_status','') else 'Active'}")
+                asi2.metric("Quantum Dimensionality", data.get("quantum_dim", 1024))
+                asi3.info(f"**Forge Log:** {data.get('forge_status', 'IDLE')}")
 
                 # Swarm & Routing Row
                 st.subheader("Hive Intelligence & Routing")

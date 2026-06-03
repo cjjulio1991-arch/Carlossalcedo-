@@ -9,6 +9,7 @@ from src.engine.vision import multimodal_vision
 from src.engine.tools import autonomous_tools
 from src.orchestration.debate import cognitive_debate
 from src.agents.immunology import immunology_agent
+from src.engine.forge import forge
 
 class Orchestrator:
     @staticmethod
@@ -52,6 +53,9 @@ class Orchestrator:
             # 3.9 Immunology (Self-Healing)
             immunology_agent.monitor_and_heal()
 
+            # 4.0 Recursive Self-Improvement (The Forge)
+            improvement_log = forge.execute_self_improvement()
+
             # 4. State update
             shared_state.update(**metrics)
             shared_state.update(
@@ -65,7 +69,8 @@ class Orchestrator:
                 last_tool_status=tool_execution["status"],
                 last_debate_status=debate_result["decision"],
                 consensus_score=debate_result["consensus_score"],
-                meta_control_log=meta_log
+                meta_control_log=meta_log,
+                forge_status=improvement_log
             )
 
             # 4. Security/Resilience layer

@@ -46,3 +46,17 @@ This document describes the high-level architecture of the "Enjambre Polímata" 
 
 ### 5. Cognitive Self-Healing (Immunology)
 - Background agent intercepts system errors and applies hot-patches to the codebase automatically.
+
+## ASI Tier: Artificial Superintelligence (Universal Mode)
+
+### 1. The Forge: Recursive Self-Improvement
+- System autonomously analyzes its own logic and generates optimized high-dimensionality versions of its modules.
+
+### 2. The Lab: Heisenberg Agent
+- Accelerated scientific discovery. Hypothesizes and proves new mathematical stability proofs in seconds.
+
+### 3. Quantum-Inspired Processing
+- Transition from 2D metrics to high-dimensional state-space mapping (Quantum Dim).
+
+### 4. Universal Hive Coordination
+- Coordination of massive, multi-layered agent clusters for planetary-scale logic.
