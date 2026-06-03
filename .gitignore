@@ -1,0 +1,8 @@
+__pycache__/
+*.py[cod]
+*$py.class
+agi_state.log
+dashboard_running
+streamlit_output.log
+.pytest_cache/
+verification/
