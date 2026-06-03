@@ -47,11 +47,18 @@ def run_dashboard():
                 r_col2.info(f"**Routing Tier:** {data.get('routing_tier', 'N/A')}")
                 r_col3.metric("Episodic Memory Size", data.get("memory_size", 0))
 
+                # Metacognition Row
+                st.subheader("🧠 Meta-Cognición y Auto-Evolución")
+                m_col1, m_col2, m_col3 = st.columns(3)
+                m_col1.metric("Debate Consensus", f"{data.get('consensus_score', 0.0):.2f}")
+                m_col2.info(f"**Debate Status:** {data.get('last_debate_status', 'N/A')}")
+                m_col3.warning(f"**Meta-Control:** {data.get('meta_control_log', 'IDLE')}")
+
                 # Secondary Cognitive Metrics
                 col_a, col_b, col_c = st.columns(3)
                 col_a.metric("Flow Rate", data.get('flow_rate', 0))
                 col_b.metric("Stability", data.get('stability', 'UNKNOWN'))
-                col_c.metric("Tool Status", data.get("last_tool_status", "IDLE"))
+                col_c.metric("Tool Status (Verified)", data.get("last_tool_status", "IDLE"))
 
                 # Advanced Perception & Swarm Activity
                 st.markdown("---")
@@ -65,6 +72,12 @@ def run_dashboard():
                     activities = data.get("swarm_activity", [])
                     for act in activities:
                         st.write(f"- {act}")
+
+                # Immunology & Self-Healing
+                st.markdown("---")
+                st.subheader("🛡️ Inmunología y Auto-Sanación")
+                heal_log = data.get("self_healing_log", "No healing activity detected.")
+                st.code(heal_log, language="text")
 
                 # Security Layer Visualization
                 st.markdown("---")

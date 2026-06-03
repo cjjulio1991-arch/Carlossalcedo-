@@ -1,5 +1,6 @@
 import subprocess
 import os
+from src.security.formal_verification import formal_verifier
 
 class AutonomousTools:
     def __init__(self, sandbox_dir="/tmp/agi_sandbox"):
@@ -9,17 +10,22 @@ class AutonomousTools:
 
     def execute_safe_script(self, code: str, axiom_check=True):
         """
-        Executes code in a simulated sandbox.
-        In this implementation, we simulate the execution and validation.
+        Executes code in a simulated sandbox after Formal Verification.
         """
-        if "os.remove" in code or "shutil" in code:
-            return {"status": "BLOCKED", "reason": "Axiom Violation: Destructive command detected."}
+        # Neuro-Symbolic Verification Step
+        verification = formal_verifier.verify_action(code)
 
-        # Simulate successful execution
+        if verification["status"] == "FORBIDDEN":
+            return {
+                "status": "BLOCKED_BY_FORMAL_PROVER",
+                "reason": verification["proof"]
+            }
+
+        # Simulate successful execution after proof
         return {
-            "status": "SUCCESS",
-            "output": f"Execution finished. Result: {hash(code) % 1000}",
-            "environment": "Sandbox-Alpha"
+            "status": "SUCCESS (VERIFIED)",
+            "output": f"Execution finished. Proof UID: {hash(verification['proof']) % 10000}",
+            "environment": "Zero-Trust-Sandbox"
         }
 
     def web_scrape_sim(self, url: str):

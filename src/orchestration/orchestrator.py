@@ -7,6 +7,8 @@ from src.engine.router import cognitive_router
 from src.engine.memory import episodic_memory
 from src.engine.vision import multimodal_vision
 from src.engine.tools import autonomous_tools
+from src.orchestration.debate import cognitive_debate
+from src.agents.immunology import immunology_agent
 
 class Orchestrator:
     @staticmethod
@@ -41,6 +43,15 @@ class Orchestrator:
             vision_data = multimodal_vision.analyze_perception("System Dashboard Capture")
             tool_execution = autonomous_tools.execute_safe_script("print('Optimizing system variables...')")
 
+            # 3.7 Adversarial Debate
+            debate_result = cognitive_debate.resolve_complex_decision("Update Meta-Optimization Axioms")
+
+            # 3.8 Meta-Optimization
+            meta_log = dqn_engine.meta_optimizer.evaluate_and_adjust(metrics["stability"])
+
+            # 3.9 Immunology (Self-Healing)
+            immunology_agent.monitor_and_heal()
+
             # 4. State update
             shared_state.update(**metrics)
             shared_state.update(
@@ -51,7 +62,10 @@ class Orchestrator:
                 routing_tier=routing_info["tier"],
                 memory_size=len(episodic_memory.vector_store),
                 perception_log=vision_data["analysis"],
-                last_tool_status=tool_execution["status"]
+                last_tool_status=tool_execution["status"],
+                last_debate_status=debate_result["decision"],
+                consensus_score=debate_result["consensus_score"],
+                meta_control_log=meta_log
             )
 
             # 4. Security/Resilience layer
