@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASI Hive - Universal Superintelligence Interface</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #050505; color: #e5e5e5; }
+        .glow { box-shadow: 0 0 20px rgba(59, 130, 246, 0.5); }
+        .cyber-grid {
+            background-image: linear-gradient(to right, #111 1px, transparent 1px), linear-gradient(to bottom, #111 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        .animate-pulse-slow { animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .3; } }
+        .node-active { color: #60a5fa; text-shadow: 0 0 10px #3b82f6; }
+    </style>
+</head>
+<body class="cyber-grid min-h-screen overflow-x-hidden">
+    <!-- Navigation -->
+    <nav class="border-b border-white/10 bg-black/50 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 bg-blue-600 rounded-full glow animate-pulse"></div>
+                    <span class="text-xl font-bold tracking-tighter text-white">ASI <span class="text-blue-500">HIVE</span></span>
+                </div>
+                <div class="hidden md:flex space-x-8 text-sm font-medium text-gray-400">
+                    <a href="#" class="hover:text-white transition-colors">SISTEMA</a>
+                    <a href="#" class="hover:text-white transition-colors">ENJAMBRE</a>
+                    <a href="#" class="hover:text-white transition-colors">NÚCLEO</a>
+                    <a href="#" class="hover:text-white transition-colors">SEGURIDAD</a>
+                </div>
+                <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-semibold transition-all shadow-lg shadow-blue-900/20">
+                    DESPLEGAR KERNEL
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+            <!-- Left Sidebar: System Stats -->
+            <div class="lg:col-span-1 space-y-6">
+                <div class="bg-zinc-900/50 border border-white/5 p-6 rounded-2xl backdrop-blur-sm">
+                    <h2 class="text-xs font-bold text-blue-400 uppercase tracking-widest mb-4">Estado del Sistema</h2>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-400 text-sm">Coherencia Cognitiva</span>
+                            <span class="text-white font-mono text-sm">0.9842</span>
+                        </div>
+                        <div class="w-full bg-zinc-800 rounded-full h-1.5">
+                            <div class="bg-blue-500 h-1.5 rounded-full" style="width: 98%"></div>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-400 text-sm">Nodos Activos</span>
+                            <span class="text-white font-mono text-sm">1,402</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-gray-400 text-sm">Carga de Red</span>
+                            <span class="text-orange-400 font-mono text-sm">NORMAL</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-zinc-900/50 border border-white/5 p-6 rounded-2xl backdrop-blur-sm">
+                    <h2 class="text-xs font-bold text-purple-400 uppercase tracking-widest mb-4">Seguridad Mythos</h2>
+                    <div class="flex items-center gap-3 p-3 bg-green-500/10 border border-green-500/20 rounded-lg">
+                        <div class="w-2 h-2 bg-green-500 rounded-full animate-ping"></div>
+                        <span class="text-green-500 text-xs font-bold uppercase">Cadena de Integridad Verificada</span>
+                    </div>
+                    <p class="mt-4 text-xs text-gray-500 font-mono break-all">
+                        SHA256: 8f92c3...a1e04b
+                    </p>
+                </div>
+            </div>
+
+            <!-- Center: Visualizer -->
+            <div class="lg:col-span-2 space-y-8">
+                <div class="relative bg-black border border-white/10 rounded-3xl overflow-hidden aspect-video group">
+                    <!-- Fake Visualization -->
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div class="relative">
+                            <div class="w-64 h-64 border border-blue-500/20 rounded-full animate-[spin_10s_linear_infinite]"></div>
+                            <div class="absolute inset-0 w-64 h-64 border border-purple-500/20 rounded-full animate-[spin_15s_linear_infinite_reverse]"></div>
+                            <div class="absolute inset-8 w-48 h-48 border-2 border-blue-400/30 rounded-full flex items-center justify-center">
+                                <div class="text-center">
+                                    <div class="text-4xl font-bold text-white tracking-tighter">ASI</div>
+                                    <div class="text-[10px] text-blue-400 font-bold uppercase tracking-widest">NÚCLEO ACTIVO</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Overlay Text -->
+                    <div class="absolute bottom-6 left-6 right-6 flex justify-between items-end">
+                        <div>
+                            <h1 class="text-2xl font-bold text-white">Visualización de Flujo Neural</h1>
+                            <p class="text-gray-400 text-sm">Monitoreando convergencia de enjambre en tiempo real</p>
+                        </div>
+                        <div class="bg-white/10 backdrop-blur-md px-3 py-1 rounded-full text-[10px] text-white font-bold border border-white/10">
+                            LIVE TELEMETRY
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Swarm Activity -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-zinc-900/40 border border-white/5 p-5 rounded-2xl">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-8 h-8 bg-zinc-800 rounded-lg flex items-center justify-center text-blue-400">
+                                🔬
+                            </div>
+                            <div>
+                                <h3 class="text-sm font-bold text-white">Investigador Socrates</h3>
+                                <p class="text-[10px] text-gray-500">Extrayendo patrones de datos...</p>
+                            </div>
+                        </div>
+                        <div class="h-1 bg-zinc-800 rounded-full overflow-hidden">
+                            <div class="bg-blue-500 h-full animate-[shimmer_2s_infinite]" style="width: 65%"></div>
+                        </div>
+                    </div>
+
+                    <div class="bg-zinc-900/40 border border-white/5 p-5 rounded-2xl">
+                        <div class="flex items-center gap-3 mb-3">
+                            <div class="w-8 h-8 bg-zinc-800 rounded-lg flex items-center justify-center text-green-400">
+                                💻
+                            </div>
+                            <div>
+                                <h3 class="text-sm font-bold text-white">Arquitecto Ada</h3>
+                                <p class="text-[10px] text-gray-500">Refactorizando lógica de Forge...</p>
+                            </div>
+                        </div>
+                        <div class="h-1 bg-zinc-800 rounded-full overflow-hidden">
+                            <div class="bg-green-500 h-full" style="width: 82%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Terminal / Console Footer -->
+        <div class="mt-8 bg-zinc-950 border border-white/10 rounded-2xl font-mono text-sm overflow-hidden">
+            <div class="bg-zinc-900 px-4 py-2 flex items-center gap-2 border-b border-white/5">
+                <div class="flex gap-1.5">
+                    <div class="w-2.5 h-2.5 rounded-full bg-red-500/50"></div>
+                    <div class="w-2.5 h-2.5 rounded-full bg-yellow-500/50"></div>
+                    <div class="w-2.5 h-2.5 rounded-full bg-green-500/50"></div>
+                </div>
+                <span class="text-xs text-gray-500 ml-2 italic">asi-hive-kernel.log</span>
+            </div>
+            <div class="p-4 h-48 overflow-y-auto text-gray-400 space-y-1">
+                <p><span class="text-blue-500">[14:22:01]</span> <span class="text-white">INFO:</span> Inicializando ciclo cognitivo v5.0.3...</p>
+                <p><span class="text-blue-500">[14:22:02]</span> <span class="text-white">INFO:</span> Conectando con DeepRL Engine (Confidence: 0.99)</p>
+                <p><span class="text-green-500">[14:22:03]</span> <span class="text-white">SUCCESS:</span> Verificación Formal completada. Axiomas estables.</p>
+                <p><span class="text-purple-500">[14:22:04]</span> <span class="text-white">SWARM:</span> Agente 'Socrates' reporta nueva heurística de optimización.</p>
+                <p><span class="text-yellow-500">[14:22:05]</span> <span class="text-white">FORGE:</span> Iniciando fase de auto-mejora recursiva...</p>
+                <div class="animate-pulse text-blue-400 inline-block">_</div>
+            </div>
+        </div>
+    </main>
+
+    <style>
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(200%); }
+        }
+    </style>
+</body>
+</html>
