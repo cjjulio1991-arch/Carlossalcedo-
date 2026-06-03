@@ -40,11 +40,31 @@ def run_dashboard():
                 rl2.metric("Learning Rate (Epsilon)", data.get('rl_epsilon', 1.0))
                 rl3.metric("Cognitive Load", data.get('cognitive_load', 0))
 
+                # Swarm & Routing Row
+                st.subheader("Hive Intelligence & Routing")
+                r_col1, r_col2, r_col3 = st.columns(3)
+                r_col1.metric("Active Model (Polyglot)", data.get("active_model", "None"))
+                r_col2.info(f"**Routing Tier:** {data.get('routing_tier', 'N/A')}")
+                r_col3.metric("Episodic Memory Size", data.get("memory_size", 0))
+
                 # Secondary Cognitive Metrics
                 col_a, col_b, col_c = st.columns(3)
                 col_a.metric("Flow Rate", data.get('flow_rate', 0))
                 col_b.metric("Stability", data.get('stability', 'UNKNOWN'))
-                col_c.metric("SNR (dB)", data.get('snr_db', 0))
+                col_c.metric("Tool Status", data.get("last_tool_status", "IDLE"))
+
+                # Advanced Perception & Swarm Activity
+                st.markdown("---")
+                st.subheader("👁️ Percepción Multimodal y Actividad del Enjambre")
+                p_col1, p_col2 = st.columns([1, 2])
+                with p_col1:
+                    st.write("**Visual Perception Log:**")
+                    st.caption(data.get("perception_log", "No visual data available."))
+                with p_col2:
+                    st.write("**Swarm Task Distribution (Hive):**")
+                    activities = data.get("swarm_activity", [])
+                    for act in activities:
+                        st.write(f"- {act}")
 
                 # Security Layer Visualization
                 st.markdown("---")

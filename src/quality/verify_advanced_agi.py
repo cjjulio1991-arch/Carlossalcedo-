@@ -22,12 +22,12 @@ def verify_mythos_dashboard():
             time.sleep(3)
 
             # Take screenshot
-            page.screenshot(path="/home/jules/verification/mythos_agi_final.png", full_page=True)
-            print("Screenshot saved to /home/jules/verification/mythos_agi_final.png")
+            page.screenshot(path="verification_result.png", full_page=True)
+            print("Screenshot saved to verification_result.png")
 
         except Exception as e:
             print(f"Verification failed: {e}")
-            page.screenshot(path="/home/jules/verification/error_mythos.png")
+            page.screenshot(path="error_mythos.png")
         finally:
             browser.close()
 
