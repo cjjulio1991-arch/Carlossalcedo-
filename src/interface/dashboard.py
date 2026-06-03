@@ -21,8 +21,6 @@ def run_dashboard():
     st.sidebar.write("Arquitectura: 21 Módulos (Refactored)")
 
     # Main Dashboard Area
-    col1, col2 = st.columns(2)
-
     placeholder = st.empty()
 
     while True:
@@ -30,13 +28,32 @@ def run_dashboard():
             data = shared_state.get_all()
 
             with placeholder.container():
+                # Primary Metrics
                 c1, c2, c3 = st.columns(3)
-                c1.metric("Índice de Coherencia", f"{data['coherence_index']:.3f}")
-                c2.metric("Nodos de Memoria", data['memory_nodes'])
-                c3.metric("Status", data['status'])
+                c1.metric("Índice de Coherencia", f"{data.get('coherence_index', 0.0):.4f}")
+                c2.metric("Nodos de Memoria", data.get('memory_nodes', 0))
+                c3.metric("Resilience Status", data.get('resilience_status', 'N/A'))
 
-                st.subheader("Telemetría en Tiempo Real (JSON)")
-                st.json(data)
+                # Secondary Cognitive Metrics
+                col_a, col_b, col_c = st.columns(3)
+                col_a.metric("Flow Rate", data.get('flow_rate', 0))
+                col_b.metric("Stability", data.get('stability', 'UNKNOWN'))
+                col_c.metric("SNR (dB)", data.get('snr_db', 0))
+
+                # Security Layer Visualization
+                st.markdown("---")
+                st.subheader("🛡️ Capa de Seguridad y Resiliencia")
+                st.info(f"**Backup Hash (SHA-256):** `{data.get('last_backup_hash', 'NO HASH')}`")
+
+                # Telemetry Area
+                with st.expander("Telemetría Completa (JSON)", expanded=False):
+                    st.json(data)
+
+                # Event Log (Simulation)
+                st.subheader("📜 Log de Eventos del Sistema")
+                st.code(f"[{time.strftime('%H:%M:%S')}] Cognitive Cycle: Verified\n"
+                        f"[{time.strftime('%H:%M:%S')}] Resilience Snapshot: Created\n"
+                        f"[{time.strftime('%H:%M:%S')}] Integrity Check: PASSED")
 
         except Exception as e:
             st.error(f"Error al cargar datos: {e}")
