@@ -13,9 +13,12 @@
             background-image: linear-gradient(to right, #111 1px, transparent 1px), linear-gradient(to bottom, #111 1px, transparent 1px);
             background-size: 40px 40px;
         }
-        .animate-pulse-slow { animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .3; } }
-        .node-active { color: #60a5fa; text-shadow: 0 0 10px #3b82f6; }
+        .animate-shimmer { animation: shimmer 2s infinite; }
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(200%); }
+        }
     </style>
 </head>
 <body class="cyber-grid min-h-screen overflow-x-hidden">
@@ -24,17 +27,17 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16 items-center">
                 <div class="flex items-center gap-2">
-                    <div class="w-8 h-8 bg-blue-600 rounded-full glow animate-pulse"></div>
+                    <div id="status-light" class="w-8 h-8 bg-blue-600 rounded-full glow animate-pulse"></div>
                     <span class="text-xl font-bold tracking-tighter text-white">ASI <span class="text-blue-500">HIVE</span></span>
                 </div>
                 <div class="hidden md:flex space-x-8 text-sm font-medium text-gray-400">
-                    <a href="#" class="hover:text-white transition-colors">SISTEMA</a>
-                    <a href="#" class="hover:text-white transition-colors">ENJAMBRE</a>
-                    <a href="#" class="hover:text-white transition-colors">NÚCLEO</a>
-                    <a href="#" class="hover:text-white transition-colors">SEGURIDAD</a>
+                    <span class="hover:text-white cursor-pointer transition-colors">SISTEMA</span>
+                    <span class="hover:text-white cursor-pointer transition-colors">ENJAMBRE</span>
+                    <span class="hover:text-white cursor-pointer transition-colors">NÚCLEO</span>
+                    <span class="hover:text-white cursor-pointer transition-colors">SEGURIDAD</span>
                 </div>
-                <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-semibold transition-all shadow-lg shadow-blue-900/20">
-                    DESPLEGAR KERNEL
+                <button id="deploy-btn" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-semibold transition-all shadow-lg shadow-blue-900/20 active:scale-95">
+                    REINICIAR KERNEL
                 </button>
             </div>
         </div>
@@ -51,18 +54,18 @@
                     <div class="space-y-4">
                         <div class="flex justify-between items-center">
                             <span class="text-gray-400 text-sm">Coherencia Cognitiva</span>
-                            <span class="text-white font-mono text-sm">0.9842</span>
+                            <span id="coherence-val" class="text-white font-mono text-sm">0.9842</span>
                         </div>
                         <div class="w-full bg-zinc-800 rounded-full h-1.5">
-                            <div class="bg-blue-500 h-1.5 rounded-full" style="width: 98%"></div>
+                            <div id="coherence-bar" class="bg-blue-500 h-1.5 rounded-full transition-all duration-500" style="width: 98%"></div>
                         </div>
                         <div class="flex justify-between items-center">
                             <span class="text-gray-400 text-sm">Nodos Activos</span>
-                            <span class="text-white font-mono text-sm">1,402</span>
+                            <span id="nodes-val" class="text-white font-mono text-sm">1,402</span>
                         </div>
                         <div class="flex justify-between items-center">
                             <span class="text-gray-400 text-sm">Carga de Red</span>
-                            <span class="text-orange-400 font-mono text-sm">NORMAL</span>
+                            <span id="load-status" class="text-green-400 font-mono text-sm">OPTIMAL</span>
                         </div>
                     </div>
                 </div>
@@ -73,15 +76,15 @@
                         <div class="w-2 h-2 bg-green-500 rounded-full animate-ping"></div>
                         <span class="text-green-500 text-xs font-bold uppercase">Cadena de Integridad Verificada</span>
                     </div>
-                    <p class="mt-4 text-xs text-gray-500 font-mono break-all">
-                        SHA256: 8f92c3...a1e04b
+                    <p class="mt-4 text-[10px] text-gray-500 font-mono break-all opacity-70">
+                        HASH_LAYER: <span id="hash-val">8f92c3...a1e04b</span>
                     </p>
                 </div>
             </div>
 
             <!-- Center: Visualizer -->
             <div class="lg:col-span-2 space-y-8">
-                <div class="relative bg-black border border-white/10 rounded-3xl overflow-hidden aspect-video group">
+                <div class="relative bg-black border border-white/10 rounded-3xl overflow-hidden aspect-video group cursor-crosshair">
                     <!-- Fake Visualization -->
                     <div class="absolute inset-0 flex items-center justify-center">
                         <div class="relative">
@@ -89,86 +92,151 @@
                             <div class="absolute inset-0 w-64 h-64 border border-purple-500/20 rounded-full animate-[spin_15s_linear_infinite_reverse]"></div>
                             <div class="absolute inset-8 w-48 h-48 border-2 border-blue-400/30 rounded-full flex items-center justify-center">
                                 <div class="text-center">
-                                    <div class="text-4xl font-bold text-white tracking-tighter">ASI</div>
+                                    <div id="core-label" class="text-4xl font-bold text-white tracking-tighter transition-all">ASI</div>
                                     <div class="text-[10px] text-blue-400 font-bold uppercase tracking-widest">NÚCLEO ACTIVO</div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Overlay Text -->
-                    <div class="absolute bottom-6 left-6 right-6 flex justify-between items-end">
+                    <div class="absolute bottom-6 left-6 right-6 flex justify-between items-end pointer-events-none">
                         <div>
                             <h1 class="text-2xl font-bold text-white">Visualización de Flujo Neural</h1>
-                            <p class="text-gray-400 text-sm">Monitoreando convergencia de enjambre en tiempo real</p>
-                        </div>
-                        <div class="bg-white/10 backdrop-blur-md px-3 py-1 rounded-full text-[10px] text-white font-bold border border-white/10">
-                            LIVE TELEMETRY
+                            <p class="text-gray-400 text-sm">Interacción con el enjambre habilitada</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Swarm Activity -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div class="bg-zinc-900/40 border border-white/5 p-5 rounded-2xl">
+                    <div class="bg-zinc-900/40 border border-white/5 p-5 rounded-2xl group hover:border-blue-500/30 transition-colors">
                         <div class="flex items-center gap-3 mb-3">
-                            <div class="w-8 h-8 bg-zinc-800 rounded-lg flex items-center justify-center text-blue-400">
-                                🔬
-                            </div>
+                            <div class="w-8 h-8 bg-zinc-800 rounded-lg flex items-center justify-center text-blue-400">🔬</div>
                             <div>
                                 <h3 class="text-sm font-bold text-white">Investigador Socrates</h3>
-                                <p class="text-[10px] text-gray-500">Extrayendo patrones de datos...</p>
+                                <p id="agent1-status" class="text-[10px] text-gray-500">Analizando patrones...</p>
                             </div>
                         </div>
                         <div class="h-1 bg-zinc-800 rounded-full overflow-hidden">
-                            <div class="bg-blue-500 h-full animate-[shimmer_2s_infinite]" style="width: 65%"></div>
+                            <div id="agent1-bar" class="bg-blue-500 h-full transition-all duration-1000" style="width: 65%"></div>
                         </div>
                     </div>
 
-                    <div class="bg-zinc-900/40 border border-white/5 p-5 rounded-2xl">
+                    <div class="bg-zinc-900/40 border border-white/5 p-5 rounded-2xl group hover:border-green-500/30 transition-colors">
                         <div class="flex items-center gap-3 mb-3">
-                            <div class="w-8 h-8 bg-zinc-800 rounded-lg flex items-center justify-center text-green-400">
-                                💻
-                            </div>
+                            <div class="w-8 h-8 bg-zinc-800 rounded-lg flex items-center justify-center text-green-400">💻</div>
                             <div>
                                 <h3 class="text-sm font-bold text-white">Arquitecto Ada</h3>
-                                <p class="text-[10px] text-gray-500">Refactorizando lógica de Forge...</p>
+                                <p id="agent2-status" class="text-[10px] text-gray-500">Compilando Forge...</p>
                             </div>
                         </div>
                         <div class="h-1 bg-zinc-800 rounded-full overflow-hidden">
-                            <div class="bg-green-500 h-full" style="width: 82%"></div>
+                            <div id="agent2-bar" class="bg-green-500 h-full transition-all duration-1000" style="width: 82%"></div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Terminal / Console Footer -->
-        <div class="mt-8 bg-zinc-950 border border-white/10 rounded-2xl font-mono text-sm overflow-hidden">
-            <div class="bg-zinc-900 px-4 py-2 flex items-center gap-2 border-b border-white/5">
-                <div class="flex gap-1.5">
-                    <div class="w-2.5 h-2.5 rounded-full bg-red-500/50"></div>
-                    <div class="w-2.5 h-2.5 rounded-full bg-yellow-500/50"></div>
-                    <div class="w-2.5 h-2.5 rounded-full bg-green-500/50"></div>
+        <!-- Terminal -->
+        <div class="mt-8 bg-zinc-950 border border-white/10 rounded-2xl font-mono text-sm overflow-hidden shadow-2xl">
+            <div class="bg-zinc-900 px-4 py-2 flex justify-between items-center border-b border-white/5">
+                <div class="flex items-center gap-2">
+                    <div class="flex gap-1.5">
+                        <div class="w-2.5 h-2.5 rounded-full bg-red-500/50"></div>
+                        <div class="w-2.5 h-2.5 rounded-full bg-yellow-500/50"></div>
+                        <div class="w-2.5 h-2.5 rounded-full bg-green-500/50"></div>
+                    </div>
+                    <span class="text-xs text-gray-500 ml-2 italic">asi-hive-kernel.log</span>
                 </div>
-                <span class="text-xs text-gray-500 ml-2 italic">asi-hive-kernel.log</span>
+                <span id="uptime" class="text-[10px] text-gray-600 font-bold">UPTIME: 00:00:00</span>
             </div>
-            <div class="p-4 h-48 overflow-y-auto text-gray-400 space-y-1">
-                <p><span class="text-blue-500">[14:22:01]</span> <span class="text-white">INFO:</span> Inicializando ciclo cognitivo v5.0.3...</p>
-                <p><span class="text-blue-500">[14:22:02]</span> <span class="text-white">INFO:</span> Conectando con DeepRL Engine (Confidence: 0.99)</p>
-                <p><span class="text-green-500">[14:22:03]</span> <span class="text-white">SUCCESS:</span> Verificación Formal completada. Axiomas estables.</p>
-                <p><span class="text-purple-500">[14:22:04]</span> <span class="text-white">SWARM:</span> Agente 'Socrates' reporta nueva heurística de optimización.</p>
-                <p><span class="text-yellow-500">[14:22:05]</span> <span class="text-white">FORGE:</span> Iniciando fase de auto-mejora recursiva...</p>
-                <div class="animate-pulse text-blue-400 inline-block">_</div>
+            <div id="terminal" class="p-4 h-64 overflow-y-auto text-gray-400 space-y-1 scroll-smooth">
+                <!-- Logs injected here -->
             </div>
         </div>
     </main>
 
-    <style>
-        @keyframes shimmer {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(200%); }
+    <script>
+        const terminal = document.getElementById('terminal');
+        const coherenceVal = document.getElementById('coherence-val');
+        const coherenceBar = document.getElementById('coherence-bar');
+        const nodesVal = document.getElementById('nodes-val');
+        const uptimeEl = document.getElementById('uptime');
+        const hashVal = document.getElementById('hash-val');
+
+        let logs = [
+            { type: 'INFO', msg: 'Inicializando ciclo cognitivo v5.0.3...', color: 'text-blue-500' },
+            { type: 'SUCCESS', msg: 'Capa de Seguridad Mythos activa.', color: 'text-green-500' },
+            { type: 'SWARM', msg: 'Agente Socrates conectado al búfer de memoria.', color: 'text-purple-500' }
+        ];
+
+        function addLog(type, msg, color) {
+            const time = new Date().toLocaleTimeString('en-GB', { hour12: false });
+            const p = document.createElement('p');
+            p.innerHTML = `<span class="${color}">[${time}]</span> <span class="text-white font-bold">${type}:</span> ${msg}`;
+            p.className = 'opacity-0 translate-y-2 transition-all duration-300';
+            terminal.appendChild(p);
+            setTimeout(() => { p.classList.remove('opacity-0', 'translate-y-2'); }, 10);
+            terminal.scrollTop = terminal.scrollHeight;
+            if (terminal.childNodes.length > 50) terminal.removeChild(terminal.firstChild);
         }
-    </style>
+
+        // Initialize logs
+        logs.forEach(l => addLog(l.type, l.msg, l.color));
+
+        // Interaction Simulation
+        setInterval(() => {
+            // Update Coherence
+            const c = (0.95 + Math.random() * 0.04).toFixed(4);
+            coherenceVal.innerText = c;
+            coherenceBar.style.width = (c * 100) + '%';
+
+            // Update Nodes
+            const n = Math.floor(1400 + Math.random() * 50);
+            nodesVal.innerText = n.toLocaleString();
+
+            // Random Events
+            if (Math.random() > 0.8) {
+                const events = [
+                    { t: 'FORGE', m: 'Optimizando pesos neuronales...', c: 'text-yellow-500' },
+                    { t: 'MEM', m: 'Comprimiendo memoria episódica.', c: 'text-blue-400' },
+                    { t: 'SAFE', m: 'Validación formal completada.', c: 'text-green-400' },
+                    { t: 'SWARM', m: 'Nuevo consenso alcanzado (0.92).', c: 'text-purple-400' }
+                ];
+                const e = events[Math.floor(Math.random() * events.length)];
+                addLog(e.t, e.m, e.c);
+            }
+
+            // Update Bars
+            document.getElementById('agent1-bar').style.width = Math.floor(40 + Math.random() * 50) + '%';
+            document.getElementById('agent2-bar').style.width = Math.floor(40 + Math.random() * 50) + '%';
+
+            // Random Hash
+            if (Math.random() > 0.95) {
+                hashVal.innerText = Math.random().toString(36).substring(2, 15) + '...';
+            }
+        }, 3000);
+
+        // Uptime counter
+        let seconds = 0;
+        setInterval(() => {
+            seconds++;
+            const h = Math.floor(seconds / 3600).toString().padStart(2, '0');
+            const m = Math.floor((seconds % 3600) / 60).toString().padStart(2, '0');
+            const s = (seconds % 60).toString().padStart(2, '0');
+            uptimeEl.innerText = `UPTIME: ${h}:${m}:${s}`;
+        }, 1000);
+
+        // Manual Interaction
+        document.getElementById('deploy-btn').onclick = () => {
+            addLog('SYS', 'Reiniciando kernel de enjambre...', 'text-red-500');
+            document.getElementById('status-light').classList.replace('bg-blue-600', 'bg-red-500');
+            setTimeout(() => {
+                document.getElementById('status-light').classList.replace('bg-red-500', 'bg-blue-600');
+                addLog('SYS', 'Kernel reiniciado exitosamente.', 'text-green-500');
+            }, 1000);
+        };
+    </script>
 </body>
 </html>

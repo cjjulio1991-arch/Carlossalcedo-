@@ -20,6 +20,21 @@ def run_dashboard():
     st.sidebar.markdown("---")
     st.sidebar.write("Arquitectura: 21 Módulos (Refactored)")
 
+    st.sidebar.divider()
+    st.sidebar.subheader("🕹️ Controles de Simulación")
+
+    # Interaction: Manual Forge Trigger
+    if st.sidebar.button("🚀 Forzar Ciclo de Optimización", use_container_width=True):
+        shared_state.update_metric("forge_status", f"MANUAL Optimization Cycle: {int(time.time())}")
+        st.sidebar.success("Ciclo Forge forzado exitosamente.")
+
+    # Interaction: Adjust Swarm Density
+    density = st.sidebar.slider("Nodos de Memoria (Simulado)", 100, 5000, 1400)
+    shared_state.update_metric("memory_nodes", density)
+
+    # Interaction: Security Level
+    st.sidebar.select_slider("Nivel de Seguridad Mythos", options=["Standard", "Hardened", "Paranoid"])
+
     # Main Dashboard Area
     placeholder = st.empty()
 
