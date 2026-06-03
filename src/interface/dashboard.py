@@ -34,6 +34,12 @@ def run_dashboard():
                 c2.metric("Nodos de Memoria", data.get('memory_nodes', 0))
                 c3.metric("Resilience Status", data.get('resilience_status', 'N/A'))
 
+                # Deep RL Metrics
+                rl1, rl2, rl3 = st.columns(3)
+                rl1.metric("RL Action Selection", data.get('rl_action', 0))
+                rl2.metric("Learning Rate (Epsilon)", data.get('rl_epsilon', 1.0))
+                rl3.metric("Cognitive Load", data.get('cognitive_load', 0))
+
                 # Secondary Cognitive Metrics
                 col_a, col_b, col_c = st.columns(3)
                 col_a.metric("Flow Rate", data.get('flow_rate', 0))
@@ -43,6 +49,7 @@ def run_dashboard():
                 # Security Layer Visualization
                 st.markdown("---")
                 st.subheader("🛡️ Capa de Seguridad y Resiliencia")
+                st.success(f"**Mythos Guard Status:** {data.get('mythos_guard_status', 'INACTIVE')}")
                 st.info(f"**Backup Hash (SHA-256):** `{data.get('last_backup_hash', 'NO HASH')}`")
 
                 # Telemetry Area

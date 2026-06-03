@@ -14,10 +14,11 @@ def test_math_engine_deterministic():
 
 def test_resilience_hashing():
     rs = ResilienceSystem()
-    state = {"data": "test"}
+    state = {"data": "test", "coherence_index": 0.9}
     backup1 = rs.create_rolling_backup(state)
     backup2 = rs.create_rolling_backup(state)
 
+    assert "hash" in backup1, f"Backup failed: {backup1.get('message')}"
     assert backup1["hash"] != backup2["hash"]
     assert backup2["prev_hash"] == backup1["hash"]
     assert len(rs.history) == 2
