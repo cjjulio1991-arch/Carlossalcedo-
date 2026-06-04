@@ -1,6 +1,7 @@
 from src.agents.specialized_agents import ResearcherAgent, CoderAgent, ValidatorAgent
 from src.agents.research_lab import research_lab
 from src.agents.morphogenesis import morphogenesis_engine
+from src.orchestration.swarm_v6 import massive_swarm
 import json
 
 class SwarmOrchestrator:
@@ -17,6 +18,9 @@ class SwarmOrchestrator:
         Divides a problem and assigns tasks to the swarm.
         ASI Level: Universal coordination across multi-layered clusters.
         """
+        # LEVEL 6 MASSIVE SWARM INJECTION
+        swarm_results = massive_swarm.run_cycle(problem)
+
         # Morphogenesis Check
         dynamic_agents = []
         if "ultra-específica" in problem.lower():

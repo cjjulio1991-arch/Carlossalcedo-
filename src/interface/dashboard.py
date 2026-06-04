@@ -25,12 +25,12 @@ def run_dashboard():
 
     # Interaction: Manual Forge Trigger
     if st.sidebar.button("🚀 Forzar Ciclo de Optimización", use_container_width=True):
-        shared_state.update_metric("forge_status", f"MANUAL Optimization Cycle: {int(time.time())}")
+        shared_state.update(forge_status=f"MANUAL Optimization Cycle: {int(time.time())}")
         st.sidebar.success("Ciclo Forge forzado exitosamente.")
 
     # Interaction: Adjust Swarm Density
     density = st.sidebar.slider("Nodos de Memoria (Simulado)", 100, 5000, 1400)
-    shared_state.update_metric("memory_nodes", density)
+    shared_state.update(memory_nodes=density)
 
     # Interaction: Security Level
     st.sidebar.select_slider("Nivel de Seguridad Mythos", options=["Standard", "Hardened", "Paranoid"])
@@ -94,6 +94,22 @@ def run_dashboard():
                     activities = data.get("swarm_activity", [])
                     for act in activities:
                         st.write(f"- {act}")
+
+                    # Level 6 Heatmap Visualization
+                    st.markdown("---")
+                    st.write("**Mapa de Calor de Enjambre Nivel 6 (100 Agentes):**")
+                    l6_data = data.get("swarm_l6_telemetry", [])
+                    if l6_data:
+                        # Create a 10x10 grid simulation
+                        cols = st.columns(10)
+                        for i, agent in enumerate(l6_data[:100]):
+                            with cols[i % 10]:
+                                load = agent.get('load', 0.5)
+                                color = "green" if load < 0.4 else "orange" if load < 0.7 else "red"
+                                st.markdown(f"""
+                                <div style="width: 100%; height: 20px; background-color: {color}; border-radius: 2px; margin-bottom: 5px; opacity: 0.8;"
+                                     title="Agent {agent.get('agent_id')} | Load: {load:.2f}"></div>
+                                """, unsafe_allow_html=True)
 
                 # Immunology & Self-Healing
                 st.markdown("---")

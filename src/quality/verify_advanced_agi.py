@@ -10,7 +10,7 @@ def verify_mythos_dashboard():
             page.goto("http://localhost:3000")
 
             # Wait for title
-            expect(page.get_by_text("Centro de Control: Enjambre Polímata")).to_be_visible(timeout=15000)
+            expect(page.get_by_text("ASI Hive: Superinteligencia Universal")).to_be_visible(timeout=15000)
 
             # Check for RL metrics
             expect(page.get_by_text("RL Action Selection")).to_be_visible(timeout=10000)
