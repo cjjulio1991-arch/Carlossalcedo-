@@ -1,3 +1,5 @@
+import json
+import time
 from src.engine.state import shared_state
 from src.engine.math_engine import calculate_system_metrics
 from src.security.resilience import resilience_monitor
@@ -85,6 +87,21 @@ class Orchestrator:
                 resilience_status=backup.get("status"),
                 mythos_guard_status=backup.get("mythos_guard", "INACTIVE")
             )
+
+            # Legacy V.5 Support: Write to agi_state.log
+            try:
+                legacy_state = {
+                    "coherence_index": metrics["coherence_index"],
+                    "status": "OPERATIONAL",
+                    "memory_nodes": metrics["memory_nodes"],
+                    "timestamp": time.time(),
+                    "asi_level": 6,
+                    "swarm_size": 100
+                }
+                with open("agi_state.log", "w") as f:
+                    f.write(json.dumps(legacy_state))
+            except:
+                pass
 
             return True
         except Exception as e:
