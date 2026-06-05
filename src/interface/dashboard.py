@@ -11,14 +11,14 @@ from src.engine.state import shared_state
 from src.engine.kernel import kernel_process
 
 def run_dashboard():
-    st.set_page_config(page_title="ASI Hive: Universal Superintelligence", layout="wide")
-    st.title("🌌 ASI Hive: Superinteligencia Universal (Unified V.5 + L6)")
+    st.set_page_config(page_title="AetherOS Nexus | Level 6 Cognitive OS", layout="wide")
+    st.title("🌌 AetherOS Nexus: Autonomous Cognitive Architecture")
 
     # Sidebar Info
-    st.sidebar.header("Estado del Sistema")
-    st.sidebar.info("Capa de Interfaz activa")
+    st.sidebar.header("AetherOS Core Status")
+    st.sidebar.info("Nexus Interface Active (Level 6)")
     st.sidebar.markdown("---")
-    st.sidebar.write("Arquitectura: 21 Módulos (Refactored)")
+    st.sidebar.write("Architecture: Lyapunov-Constrained Autopoietic Core")
 
     st.sidebar.divider()
     st.sidebar.subheader("🕹️ Controles de Simulación")

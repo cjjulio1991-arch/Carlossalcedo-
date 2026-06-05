@@ -2,6 +2,7 @@ import json
 import time
 from src.engine.state import shared_state
 from src.engine.math_engine import calculate_system_metrics
+from src.security.compliance import mce
 from src.security.resilience import resilience_monitor
 from src.engine.deep_rl import dqn_engine
 from src.orchestration.swarm import swarm_orchestrator
@@ -28,6 +29,12 @@ class Orchestrator:
             # 0. Cognitive Routing (Polyglot)
             routing_info = cognitive_router.route_task("Perform full system audit and optimization cycle")
 
+            # 0.1 Level 6 Epistemic Anchoring (Active Inference)
+            # If predictive uncertainty is high, we don't proceed with automated optimization
+            if not mce.uncertainty_check(0.92): # Simulated confidence
+                shared_state.update(status="UNCERTAIN", meta_control_log="High Predictive Entropy: Enforcing Factual Anchoring")
+                return False
+
             # 1. Math Engine processing
             metrics = calculate_system_metrics()
 
@@ -37,6 +44,7 @@ class Orchestrator:
             dqn_engine.replay(batch_size=32) # Simulate learning
 
             # 3. Swarm Hive processing (Level 6 Massive Swarm Integration)
+            # Axiom: Topological Swarm Synchronization (Laplacian Dynamics)
             swarm_results = swarm_orchestrator.process_complex_problem("System Optimization Cycle")
             massive_swarm_data = massive_swarm.run_cycle("High-Density Level 6 Cognitive Synthesis")
 
