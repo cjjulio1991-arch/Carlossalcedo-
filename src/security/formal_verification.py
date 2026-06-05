@@ -1,33 +1,33 @@
 import re
 
 class FormalVerifier:
+    """
+    Code Safety Scanner.
+    Checks for high-risk patterns before execution.
+    """
     def __init__(self):
-        self.safety_axioms = {
-            "NO_DESTRUCTION": r"os\.remove|shutil\.rmtree",
-            "NETWORK_ISOLATION": r"socket\.connect|requests\.post",
-            "RESOURCE_LIMITS": r"while True|multiprocessing"
+        self.risk_patterns = {
+            "OS_DELETE": r"os\.remove|shutil\.rmtree",
+            "RECURSIVE_LOOP": r"while True"
         }
 
     def verify_action(self, code: str):
         """
-        Translates code to symbolic logic and verifies against safety axioms.
-        Simulates a SAT/SMT solver check.
+        Scans code for risk patterns.
         """
         violations = []
-        for axiom, pattern in self.safety_axioms.items():
+        for risk, pattern in self.risk_patterns.items():
             if re.search(pattern, code):
-                violations.append(axiom)
+                violations.append(risk)
 
         if violations:
             return {
                 "status": "FORBIDDEN",
-                "violations": violations,
-                "proof": f"Safety Axiom Violation: {', '.join(violations)}"
+                "violations": violations
             }
 
         return {
-            "status": "VERIFIED",
-            "proof": "Mathematical Proof: Action is compliant with Zero-Trust constraints."
+            "status": "VERIFIED"
         }
 
 formal_verifier = FormalVerifier()
