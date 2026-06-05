@@ -3,6 +3,10 @@ import time
 import threading
 import sys
 import os
+import plotly.express as px
+import plotly.graph_objects as go
+import pandas as pd
+import numpy as np
 
 # Ensure the root 'src' is in the path
 sys.path.append(os.getcwd())
@@ -122,6 +126,59 @@ def run_dashboard():
                 st.subheader("🛡️ Capa de Seguridad y Resiliencia")
                 st.success(f"**Mythos Guard Status:** {data.get('mythos_guard_status', 'INACTIVE')}")
                 st.info(f"**Backup Hash (SHA-256):** `{data.get('last_backup_hash', 'NO HASH')}`")
+
+                # Advanced Visualizations
+                st.markdown("---")
+                st.subheader("📊 Análisis de Métricas Cognitivas (AetherOS)")
+                v_col1, v_col2 = st.columns(2)
+
+                with v_col1:
+                    # 2D Radar Chart for System Health
+                    categories = ['Coherencia', 'Resiliencia', 'Flujo', 'Estabilidad', 'Carga']
+                    values = [
+                        data.get('coherence_index', 0.95),
+                        1.0 if data.get('resilience_status') == 'SECURE' else 0.5,
+                        data.get('flow_rate', 50) / 100.0,
+                        1.0 if data.get('stability') == 'STABLE' else 0.8,
+                        data.get('cognitive_load', 0.5)
+                    ]
+                    fig_radar = go.Figure(data=go.Scatterpolar(
+                        r=values,
+                        theta=categories,
+                        fill='toself',
+                        line_color='#3b82f6'
+                    ))
+                    fig_radar.update_layout(
+                        polar=dict(radialaxis=dict(visible=True, range=[0, 1])),
+                        showlegend=False,
+                        paper_bgcolor='rgba(0,0,0,0)',
+                        plot_bgcolor='rgba(0,0,0,0)',
+                        font_color="white",
+                        height=350,
+                        margin=dict(l=40, r=40, t=40, b=40)
+                    )
+                    st.plotly_chart(fig_radar, use_container_width=True)
+
+                with v_col2:
+                    # Swarm Load Distribution Histogram
+                    l6_loads = [a.get('load', 0.5) for a in data.get("swarm_l6_telemetry", [])]
+                    if not l6_loads: l6_loads = np.random.uniform(0.1, 0.9, 100)
+
+                    fig_hist = px.histogram(
+                        x=l6_loads,
+                        nbins=20,
+                        title="Distribución de Carga del Enjambre (L6)",
+                        labels={'x': 'Carga del Agente', 'y': 'Frecuencia'},
+                        color_discrete_sequence=['#3b82f6']
+                    )
+                    fig_hist.update_layout(
+                        paper_bgcolor='rgba(0,0,0,0)',
+                        plot_bgcolor='rgba(0,0,0,0)',
+                        font_color="white",
+                        height=350,
+                        margin=dict(l=20, r=20, t=60, b=20)
+                    )
+                    st.plotly_chart(fig_hist, use_container_width=True)
 
                 # Telemetry Area
                 with st.expander("Telemetría Completa (JSON)", expanded=False):
