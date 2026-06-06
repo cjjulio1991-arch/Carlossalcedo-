@@ -1,0 +1,13 @@
+__pycache__/
+*.py[cod]
+*$py.class
+agi_state.log
+streamlit.log
+dashboard_running
+.pytest_cache/
+.coverage
+htmlcov/
+dist/
+build/
+*.egg-info/
+/home/jules/verification/
